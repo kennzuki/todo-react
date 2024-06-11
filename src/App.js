@@ -6,7 +6,8 @@ function App() {
   const [todos, setTodos] = useState([])
   const inputRef=useRef()
   const add= () => {
-     const inputText=inputRef.current.value.trim()
+    const inputText = inputRef.current.value.trim()
+     console.log(inputText);
   }
   return (
     <div className='text-center flex flex-col gap-8 items-center place-items-center p-12 border'>
@@ -22,7 +23,9 @@ function App() {
           Add+
         </button>
       </section>
-      <section className=''>
+      {/* todo list */}
+      <section className='flex flex-col gap-2'>
+        
         <h1 className='uppercase flex gap-2 place-items-center'>
           joined a club{' '}
           <span className='text-red-500'>
