@@ -1,8 +1,8 @@
 import TodoItems from './TodoItems';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Todo = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(localStorage.getItem('todo')?JSON.parse(localStorage.getItem('todo')):[]);
   const inputRef = useRef();
   // add
   const add = () => {
@@ -17,6 +17,26 @@ const Todo = () => {
     inputRef.current.value=''
   };
   // delete
+  const deleteTodos = (id) => {
+    setTodos((prvTodos) => {
+      return prvTodos.filter((todo)=>todo.id !==id)
+    })
+  }
+  // iscomlete toggle
+  const toggleTodos = (id) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo.id===id) {
+          return {...todo,isCompleted:!todo.isCompleted}
+        }
+        return todo
+      })
+    })
+  }
+  // store and toggle
+  useEffect(() => {
+    localStorage.setItem('todo',JSON.stringify(todos))
+  },[todos])
 
   return (
     <div className=''>
@@ -37,7 +57,7 @@ const Todo = () => {
       {/* todo list */}
       <section className=''>
         {todos.map((items, index) => {
-          return <TodoItems key={index} text={items.text} id={items.id} isCompleted={items.isCompleted} />;
+          return <TodoItems key={index} text={items.text} id={items.id} isCompleted={items.isCompleted} deleteTodos={deleteTodos} toggle={toggleTodos} />;
         })}
       </section>
     </div>
