@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 const Todo = () => {
   const [todos, setTodos] = useState([]);
   const inputRef = useRef();
+  // add
   const add = () => {
     const inputText = inputRef.current.value.trim();
     console.log(inputText);
@@ -13,7 +14,9 @@ const Todo = () => {
       isCompleted: false,
     };
     setTodos((prev) => [...prev, newTodos]);
+    inputRef.current.value=''
   };
+  // delete
 
   return (
     <div className=''>
@@ -34,7 +37,7 @@ const Todo = () => {
       {/* todo list */}
       <section className=''>
         {todos.map((items, index) => {
-          return <TodoItems key={index} text={items.text} />;
+          return <TodoItems key={index} text={items.text} id={items.id} isCompleted={items.isCompleted} />;
         })}
       </section>
     </div>
